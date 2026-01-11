@@ -24,6 +24,7 @@ export interface Task {
   date: string; // ISO format: YYYY-MM-DD (kept for backward compatibility)
   dates?: string[]; // Multiple dates (ISO format: YYYY-MM-DD)
   everyday?: boolean; // If true, task appears on all dates
+  completedDates?: string[]; // For everyday tasks: dates when this task was completed (ISO format: YYYY-MM-DD)
   createdAt: number;
 }
 

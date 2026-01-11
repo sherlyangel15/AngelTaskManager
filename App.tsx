@@ -203,7 +203,25 @@ const App: React.FC = () => {
     if (!currentUser) return;
     
     setTasks(prev => {
-      const updatedTasks = prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
+      const updatedTasks = prev.map(t => {
+        if (t.id !== id) return t;
+        
+        // For everyday tasks, toggle completion for the current date only
+        if (t.everyday) {
+          const completedDates = t.completedDates || [];
+          const isCompletedToday = completedDates.includes(currentDate);
+          
+          return {
+            ...t,
+            completedDates: isCompletedToday
+              ? completedDates.filter(d => d !== currentDate)
+              : [...completedDates, currentDate]
+          };
+        }
+        
+        // For regular tasks, toggle the completed flag
+        return { ...t, completed: !t.completed };
+      });
       
       // Immediately save to localStorage
       const saved = localStorage.getItem('angelplanner_users');
@@ -370,7 +388,10 @@ const App: React.FC = () => {
       result = result.filter(t => t.category === filterCategory);
     }
     return result.sort((a, b) => {
-      if (a.completed !== b.completed) return a.completed ? 1 : -1;
+      // For everyday tasks, check completion for current date
+      const aCompleted = a.everyday ? (a.completedDates || []).includes(currentDate) : a.completed;
+      const bCompleted = b.everyday ? (b.completedDates || []).includes(currentDate) : b.completed;
+      if (aCompleted !== bCompleted) return aCompleted ? 1 : -1;
       const p = { [Priority.HIGH]: 0, [Priority.MEDIUM]: 1, [Priority.LOW]: 2 };
       return p[a.priority] - p[b.priority] || b.createdAt - a.createdAt;
     });
@@ -384,7 +405,13 @@ const App: React.FC = () => {
       }
       return t.date === currentDate;
     });
-    const completed = dayTasks.filter(t => t.completed).length;
+    const completed = dayTasks.filter(t => {
+      // For everyday tasks, check completion for current date
+      if (t.everyday) {
+        return (t.completedDates || []).includes(currentDate);
+      }
+      return t.completed;
+    }).length;
     return {
       total: dayTasks.length,
       completed,
@@ -704,6 +731,7 @@ const App: React.FC = () => {
                   task={task} 
                   onToggle={toggleTask} 
                   onDelete={deleteTask}
+                  currentDate={currentDate}
                 />
               ))
             ) : (

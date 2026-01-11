@@ -8,32 +8,39 @@ interface TaskItemProps {
   task: Task;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
+  currentDate: string;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) => {
+const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete, currentDate }) => {
   const categoryInfo = CATEGORY_CONFIG[task.category];
   const priorityInfo = PRIORITY_CONFIG[task.priority];
+  
+  // For everyday tasks, check if completed for the current date
+  // For regular tasks, use the completed flag
+  const isCompleted = task.everyday 
+    ? (task.completedDates || []).includes(currentDate)
+    : task.completed;
 
   return (
     <div 
       className={`group relative flex items-center gap-5 p-5 rounded-[1.75rem] transition-all duration-300 glass hover:scale-[1.01] ${
-        task.completed ? 'opacity-40 grayscale-[0.5]' : 'opacity-100'
+        isCompleted ? 'opacity-40 grayscale-[0.5]' : 'opacity-100'
       }`}
     >
       <button 
         onClick={() => onToggle(task.id)}
         className={`flex-shrink-0 w-8 h-8 rounded-xl border-2 flex items-center justify-center transition-all ${
-          task.completed 
+          isCompleted 
             ? 'bg-gradient-to-br from-emerald-500 to-teal-500 border-emerald-500 text-white' 
             : 'border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10'
         }`}
       >
-        {task.completed && <Check size={18} strokeWidth={3} />}
+        {isCompleted && <Check size={18} strokeWidth={3} />}
       </button>
 
       <div className="flex-grow min-w-0">
         <h3 className={`text-lg font-extrabold truncate transition-all ${
-          task.completed ? 'line-through text-slate-400' : 'text-black dark:text-white'
+          isCompleted ? 'line-through text-slate-400' : 'text-black dark:text-white'
         }`}>
           {task.title}
         </h3>
