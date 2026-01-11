@@ -24,7 +24,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) => {
         onClick={() => onToggle(task.id)}
         className={`flex-shrink-0 w-8 h-8 rounded-xl border-2 flex items-center justify-center transition-all ${
           task.completed 
-            ? 'bg-emerald-500 border-emerald-500 text-white' 
+            ? 'bg-gradient-to-br from-emerald-500 to-teal-500 border-emerald-500 text-white' 
             : 'border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10'
         }`}
       >
@@ -47,7 +47,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) => {
             {task.priority}
           </span>
           {task.time && (
-            <span className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight">
+            <span className="flex items-center gap-1.5 text-[10px] font-bold text-black dark:text-slate-400 uppercase tracking-tight">
               <Clock size={12} />
               {task.time}
             </span>
@@ -58,7 +58,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) => {
       <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
         <button 
           onClick={(e) => { e.stopPropagation(); onDelete(task.id); }}
-          className="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all"
+          className="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl text-black dark:text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-all"
         >
           <Trash2 size={18} />
         </button>
