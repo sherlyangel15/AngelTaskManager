@@ -396,41 +396,41 @@ const App: React.FC = () => {
   if (!currentUser) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="w-full max-w-md glass p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-800">
+        <div className="w-full max-w-md glass p-10 rounded-[2.5rem] border border-slate-300 dark:border-slate-800">
           <div className="flex flex-col items-center mb-10">
             <div className="w-16 h-16 bg-blue-600 rounded-3xl flex items-center justify-center text-white mb-6 shadow-xl shadow-blue-500/30">
               <CheckCircle2 size={32} strokeWidth={2.5} />
             </div>
-            <h1 className="text-4xl font-black tracking-tight text-black dark:text-white">Angel Planner</h1>
-            <p className="text-slate-500 mt-2 font-medium">Your schedule, simplified.</p>
+            <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white">Angel Planner</h1>
+            <p className="text-slate-700 mt-2 font-medium dark:text-slate-400">Your schedule, simplified.</p>
           </div>
 
           <form onSubmit={handleAuth} className="space-y-5">
             <div className="space-y-1">
-              <label className="text-xs font-black uppercase tracking-widest text-black dark:text-slate-400 ml-1">Username</label>
+              <label className="text-xs font-black uppercase tracking-widest text-slate-700 dark:text-slate-400 ml-1">Username</label>
               <input 
                 type="text" 
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-5 py-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-blue-500 transition-all font-bold text-black dark:text-white"
+                className="w-full px-5 py-4 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-bold text-slate-900 dark:text-white placeholder:text-slate-400"
                 placeholder="Enter your username"
               />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-black uppercase tracking-widest text-black dark:text-slate-400 ml-1">Password</label>
+              <label className="text-xs font-black uppercase tracking-widest text-slate-700 dark:text-slate-400 ml-1">Password</label>
               <input 
                 type="password" 
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-5 py-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-blue-500 transition-all font-bold text-black dark:text-white"
+                className="w-full px-5 py-4 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-bold text-slate-900 dark:text-white placeholder:text-slate-400"
                 placeholder="Enter your password"
               />
             </div>
             <button 
               type="submit"
-              className="w-full py-5 bg-black dark:bg-blue-600 hover:bg-slate-900 dark:hover:bg-blue-700 text-white font-black uppercase tracking-widest rounded-2xl shadow-xl transition-all transform active:scale-95 mt-4"
+              className="w-full py-5 bg-blue-600 dark:bg-blue-600 hover:bg-blue-700 dark:hover:bg-blue-700 text-white font-black uppercase tracking-widest rounded-2xl shadow-xl transition-all transform active:scale-95 mt-4"
             >
               {loginMode === 'login' ? 'Log In' : 'Create Account'}
             </button>
@@ -439,7 +439,7 @@ const App: React.FC = () => {
           <div className="mt-8 text-center">
             <button 
               onClick={() => setLoginMode(loginMode === 'login' ? 'signup' : 'login')}
-              className="text-sm font-black text-blue-600 hover:text-blue-700 underline underline-offset-4"
+              className="text-sm font-black text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400 underline underline-offset-4"
             >
               {loginMode === 'login' ? "New here? Create an account" : "Already have an account? Log in"}
             </button>
@@ -459,11 +459,11 @@ const App: React.FC = () => {
             <CheckCircle2 size={28} strokeWidth={2.5} />
           </div>
           <div>
-            <h1 className="text-3xl font-black tracking-tighter text-black dark:text-white uppercase">Angel Planner</h1>
-            <div className="flex items-center gap-3 mt-1 text-slate-500 font-black uppercase text-[10px] tracking-widest">
+            <h1 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white uppercase">Angel Planner</h1>
+            <div className="flex items-center gap-3 mt-1 text-slate-700 dark:text-slate-400 font-black uppercase text-[10px] tracking-widest">
               <span>{currentUser.username}</span>
-              <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
-              <button onClick={handleLogout} className="flex items-center gap-1 hover:text-rose-600 transition-colors">
+              <span className="w-1 h-1 bg-slate-400 dark:bg-slate-500 rounded-full"></span>
+              <button onClick={handleLogout} className="flex items-center gap-1 hover:text-rose-600 dark:hover:text-rose-500 transition-colors">
                 <LogOut size={10} /> Logout
               </button>
             </div>
@@ -485,7 +485,7 @@ const App: React.FC = () => {
             )}
             <button 
               onClick={handleExportTasks}
-              className="p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-black dark:text-slate-300 transition-all shadow-sm hover:bg-slate-50 flex items-center gap-2"
+              className="p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-300 transition-all shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-400 flex items-center gap-2"
               title="Export tasks to file"
             >
               <Download size={18} />
@@ -493,7 +493,7 @@ const App: React.FC = () => {
             </button>
             <button 
               onClick={handleImportTasks}
-              className="p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-black dark:text-slate-300 transition-all shadow-sm hover:bg-slate-50 flex items-center gap-2"
+              className="p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-300 transition-all shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-400 flex items-center gap-2"
               title="Import tasks from file"
             >
               <Upload size={18} />
@@ -502,13 +502,13 @@ const App: React.FC = () => {
           </div>
           <button 
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-black dark:text-slate-300 transition-all shadow-sm hover:bg-slate-50"
+            className="p-4 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-300 transition-all shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-400"
           >
             {isDarkMode ? <Sun size={22} /> : <Moon size={22} />}
           </button>
           <button 
             onClick={() => setShowForm(true)}
-            className="px-8 py-4 bg-black dark:bg-blue-600 hover:bg-slate-900 dark:hover:bg-blue-700 text-white rounded-[1.25rem] font-black uppercase tracking-widest shadow-xl transition-all flex items-center gap-3 transform active:scale-95"
+            className="px-8 py-4 bg-blue-600 dark:bg-blue-600 hover:bg-blue-700 dark:hover:bg-blue-700 text-white rounded-[1.25rem] font-black uppercase tracking-widest shadow-xl transition-all flex items-center gap-3 transform active:scale-95"
           >
             <Plus size={22} strokeWidth={3} /> New Plan
           </button>
