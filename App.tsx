@@ -342,7 +342,11 @@ const App: React.FC = () => {
       days.push({
         day: i,
         dateStr,
-        hasTasks: tasks.some(t => t.date === dateStr)
+        hasTasks: tasks.some(t => {
+          if (t.everyday) return true;
+          if (t.dates && t.dates.length > 0) return t.dates.includes(dateStr);
+          return t.date === dateStr;
+        })
       });
     }
     return days;
@@ -354,7 +358,14 @@ const App: React.FC = () => {
 
   // --- Filtering & Stats ---
   const filteredTasks = useMemo(() => {
-    let result = tasks.filter(t => t.date === currentDate);
+    let result = tasks.filter(t => {
+      // Check if task is for this date
+      if (t.everyday) return true; // Everyday tasks appear on all dates
+      if (t.dates && t.dates.length > 0) {
+        return t.dates.includes(currentDate);
+      }
+      return t.date === currentDate; // Fallback to single date for backward compatibility
+    });
     if (filterCategory !== 'All') {
       result = result.filter(t => t.category === filterCategory);
     }
@@ -366,7 +377,13 @@ const App: React.FC = () => {
   }, [tasks, filterCategory, currentDate]);
 
   const stats = useMemo(() => {
-    const dayTasks = tasks.filter(t => t.date === currentDate);
+    const dayTasks = tasks.filter(t => {
+      if (t.everyday) return true;
+      if (t.dates && t.dates.length > 0) {
+        return t.dates.includes(currentDate);
+      }
+      return t.date === currentDate;
+    });
     const completed = dayTasks.filter(t => t.completed).length;
     return {
       total: dayTasks.length,

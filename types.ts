@@ -21,7 +21,9 @@ export interface Task {
   priority: Priority;
   category: Category;
   time?: string;
-  date: string; // ISO format: YYYY-MM-DD
+  date: string; // ISO format: YYYY-MM-DD (kept for backward compatibility)
+  dates?: string[]; // Multiple dates (ISO format: YYYY-MM-DD)
+  everyday?: boolean; // If true, task appears on all dates
   createdAt: number;
 }
 
